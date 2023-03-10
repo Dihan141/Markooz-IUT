@@ -5,9 +5,23 @@ const productSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please add a name']
     },
-    image:{
-        type: String
-    }
+    image: [String],
+    video: [String],
+    price: {
+        type: Number,
+        required: [true, 'Please add a price']
+    },
+    catagory: [String],
+    properties: [
+        {
+            name: String,
+            value: String
+        }
+    ],
+    availability: String,
+    reward_points: Number,
+    total_sales: Number,
+    total_revenue: Number,
 },
 {
     timestamps: true,
