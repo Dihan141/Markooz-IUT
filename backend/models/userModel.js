@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -12,11 +13,14 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, 'Please add an email'],
-    unique: [true,'An account already exists under the email you provided']
+    validate: {
+      validator: validator.isEmail,
+      message: 'The entered email is invalid'
+    }
   },
   password: {
     type: String,
-    required: [true, 'Please enter a password']
+    required: true
   },
   phoneNumber: {
     type: String,
@@ -26,16 +30,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please enter an address']
   },
-  isAdmin: {
+  isMerchant: {
     type: Boolean,
+    required: true,
     default: false
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
+
   }
+},
+{
+  timestamps: true
 });
 
-const userModel = mongoose.model('User', userSchema);
-
-module.exports = userModel;
+module.exports = mongoose.model('User', userSchema);
