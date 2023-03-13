@@ -84,7 +84,11 @@ export const Header = () => {
                             <BiSearch className='searchIcon heIcon'/>
                         </div>
                         <div className="right_user">
-                            <RiUser3Line className="userIcon heIcon"/>
+                            <Link to={'/login'}>
+                                <RiUser3Line className="userIcon heIcon"/>
+                            </Link>
+                        </div>
+                        <div className="right_favorites">
                             <AiOutlineHeart className="userIcon heIcon"/>
                         </div>
                         <div className="right_card">

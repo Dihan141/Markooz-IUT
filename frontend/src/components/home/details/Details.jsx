@@ -4,6 +4,8 @@ import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams, useHistory } from "react-router-dom"
 import { ADD, DELETE, REMOVE_INT } from "../../../controller/action"
+import { Header } from "../../common/Header"
+import { Footer } from "../../common/Footer"
 
 export const Details = () => {
   const [data, setData] = useState([])
@@ -45,6 +47,7 @@ export const Details = () => {
 
   return (
     <>
+    <Header />
       <article>
         <section className='details'>
           <h2 className='details_title'>Product Details Pages</h2>
@@ -107,6 +110,7 @@ export const Details = () => {
           ))}
         </section>
       </article>
+      <Footer/>
     </>
   )
 }
