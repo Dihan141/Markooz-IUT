@@ -15,4 +15,4 @@ The project is regarding a e-commerce website tailored for the people related to
 
 [M M Nazmul Hossain](https://www.github.com/nazmul4532)
 
-[Md. Saidul Islam]() (Supervisor)
+[Md. Shihab Shahriar]() (Supervisor)
