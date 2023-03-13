@@ -6,31 +6,36 @@ const User = require('../models/userModel')
 // @router GET /api/products
 // @access  Private
 const getProducts = asyncHandler(async (req, res) => {
-    const products = await Product.find({user: req.user.id})
-    res.status(200).json(products)
+    const products = await Product.find()
+    res.status(200).json({prdcts: products})
 })
 
 // @desc Set Product
 // @router POST /api/products
 // @access  Private
 const setProduct = asyncHandler(async (req, res) => {
-    if(!req.body.name || !req.body.price)
+  const {user, name, image, video, price, catagory, properties,
+  availability, reward_points, total_sales, total_revenue} = req.body
+    if(!name || !price)
     {
         res.status(400)
         throw new Error('Fill up the required fields')
     }
-    if(req.user.isMerchant == true){
+
     const product = await Product.create({
-        name: req.body.name,
-        image: req.body.name + ' image',
-        user: req.user.id,
-        price: req.body.price,
-        availability: req.body.availability,
+      user,
+      name,
+      image,
+      video,
+      price,
+      catagory,
+      properties: [{name: 'size',value: 'xxxl'}],
+      availability,
+      reward_points,
+      total_sales,
+      total_revenue,
     })
-    res.status(200).json(product)}
-    else {
-      res.status(500).json({message: 'User is not a merchant. How did you get here?!?'})
-    }
+    res.status(200).json(product)
 })
 
 // @desc Update Product
