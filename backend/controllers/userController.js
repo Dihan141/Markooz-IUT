@@ -50,7 +50,7 @@ const registerUser = asyncHandler(async (req, res) => {
         lastName: newUser.lastName,
         email: newUser.email,
         isMerchant: newUser.isMerchant,
-        token: generateToken(user._id),
+        token: generateToken(newUser._id),
       })
     }else{
       res.status(400)
