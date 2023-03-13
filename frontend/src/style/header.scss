@@ -52,6 +52,11 @@ header {
         @include pa_ma(none, 0 $md);
       }
     }
+    &_favorites {
+      .heIcon {
+        @include pa_ma(none, 0 $md);
+      }
+    }
     .showCart {
       background: $white;
       @include positions(absolute, 11%, none, none, 20px, 450px, auto);
