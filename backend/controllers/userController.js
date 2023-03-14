@@ -9,7 +9,7 @@ const bcrypt = require('bcryptjs')
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
   const {firstName, lastName, email, password, address, phoneNumber, isMerchant} = req.body
-  if(!firstName || !lastName || !email || !password || !address || !phoneNumber){
+  if(!firstName || !lastName || !email || !password){
     res.status(400)
     throw new Error('Please add all fields')
   }
@@ -50,6 +50,7 @@ const registerUser = asyncHandler(async (req, res) => {
         lastName: newUser.lastName,
         email: newUser.email,
         isMerchant: newUser.isMerchant,
+        message: "Your account has been created Successfully"
       })
     }else{
       res.status(400)

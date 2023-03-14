@@ -41,6 +41,7 @@ export const Signup = () => {
 
 	const handleMerchantChange = (event) =>{
 		setMerchant(event.target.value)
+		data.isMerchant = event.target.value
 	}
 
     return (
@@ -56,7 +57,6 @@ export const Signup = () => {
 				</div>
 				<div className="signup_right">
 					<form className="signup_form_container" onSubmit={handleSubmit}>
-                    {/* onSubmit={handleSubmit} */}
 						<h1>Create Account</h1>
 						<input
 							type="text"
@@ -97,7 +97,7 @@ export const Signup = () => {
 						<div className="wrapperLevel0">
 							<div className="wrapperLevel1">
 								<div className="wrapper">
-									<input type="radio" name="select" value="false" id="option-1" onChange={handleMerchantChange} required/>
+									<input type="radio" name="select" value="false" id="option-1" onChange={handleMerchantChange} required />
 									<input type="radio" name="select" value="true" id="option-2" onChange={handleMerchantChange} required/>
 									<label for="option-1" class="option option-1">
 										
