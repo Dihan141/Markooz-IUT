@@ -28,6 +28,12 @@ export const Login = () => {
 	// 		}
 	// 	}
 	// };
+	const [merchant, setMerchant] = useState("");
+
+	const handleMerchantChange = (event) =>{
+		setMerchant(event.target.value)
+	}
+	
     return (
         <div className="login_container">
 			<div className="login_form_container">
@@ -48,7 +54,7 @@ export const Login = () => {
 							type="password"
 							placeholder="Password"
 							name="password"
-							//onChange={handleChange}
+							onChange={handleChange}
 							value={data.password}
 							required
 							className="login_input"
@@ -56,8 +62,8 @@ export const Login = () => {
 						<div className="wrapperLevel0">
 							<div className="wrapperLevel1">
 								<div className="wrapper">
-									<input type="radio" name="select" id="option-1" checked />
-									<input type="radio" name="select" id="option-2"/>
+									<input type="radio" name="select" value="false" id="option-1" onChange={handleMerchantChange} required/>
+									<input type="radio" name="select" value="true" id="option-2" onChange={handleMerchantChange} required/>
 									<label for="option-1" class="option option-1">
 										
 										<span>Member</span>

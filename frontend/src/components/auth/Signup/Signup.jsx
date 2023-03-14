@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './SignupStyles.css'
+import axios from 'axios'
 
 export const Signup = () => {
     const [data, setData] = useState({
@@ -9,6 +10,7 @@ export const Signup = () => {
 		lastName: "",
 		email: "",
 		password: "",
+		isMerchant : "",
 	});
 	const [error, setError] = useState("");
 	const [msg, setMsg] = useState("");
@@ -17,22 +19,30 @@ export const Signup = () => {
 		setData({ ...data, [input.name]: input.value });
 	};
 
-	// const handleSubmit = async (e) => {
-	// 	e.preventDefault();
-	// 	try {
-	// 		const url = "http://localhost:8080/api/users";
-	// 		const { data: res } = await axios.post(url, data);
-	// 		setMsg(res.message);
-	// 	} catch (error) {
-	// 		if (
-	// 			error.response &&
-	// 			error.response.status >= 400 &&
-	// 			error.response.status <= 500
-	// 		) {
-	// 			setError(error.response.data.message);
-	// 		}
-	// 	}
-	// };
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			const url = "http://localhost:5000/api/users/";
+			const { data: res } = await axios.post(url, data);
+
+			setMsg(res.message);
+		} catch (error) {
+			if (
+				error.response &&
+				error.response.status >= 400 &&
+				error.response.status <= 500
+			) {
+				setError(error.response.data.message);
+			}
+		}
+	};
+
+	const [merchant, setMerchant] = useState("");
+
+	const handleMerchantChange = (event) =>{
+		setMerchant(event.target.value)
+	}
+
     return (
         <div className="signup_container">
 			<div className="signup_form_container1">
@@ -40,12 +50,12 @@ export const Signup = () => {
 					<h1>Welcome Back</h1>
 					<Link to="/login">
 						<button type="button" className="signup_white_btn">
-							sign in
+							Sign in
 						</button>
 					</Link>
 				</div>
 				<div className="signup_right">
-					<form className="signup_form_container">
+					<form className="signup_form_container" onSubmit={handleSubmit}>
                     {/* onSubmit={handleSubmit} */}
 						<h1>Create Account</h1>
 						<input
@@ -87,8 +97,8 @@ export const Signup = () => {
 						<div className="wrapperLevel0">
 							<div className="wrapperLevel1">
 								<div className="wrapper">
-									<input type="radio" name="select" id="option-1" checked />
-									<input type="radio" name="select" id="option-2"/>
+									<input type="radio" name="select" value="false" id="option-1" onChange={handleMerchantChange} required/>
+									<input type="radio" name="select" value="true" id="option-2" onChange={handleMerchantChange} required/>
 									<label for="option-1" class="option option-1">
 										
 										<span>Member</span>

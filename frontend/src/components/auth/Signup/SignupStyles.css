@@ -66,6 +66,7 @@
 	background-color: #edf5f3;
 	margin: 5px 0;
 	font-size: 14px;
+  text-transform: none;
 }
 
 .signup_error_msg,
