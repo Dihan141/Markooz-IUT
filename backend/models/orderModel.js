@@ -1,23 +1,13 @@
 const mongoose = require('mongoose')
 
 const orderSchema = mongoose.Schema({
-//     user: mongoose.Schema.Types.ObjectId,
-//     product: mongoose.Schema.Types.ObjectId,
-//     quantity: Number,
-//     total_price: Number,
-//     payment_type: {
-//         type: String,
-//         required: [true, 'Please add a payment method']
-//     },
-//     status: String,
-// },
     user: {
       type: mongoose.Schema.Types.ObjectId,
     //   ref: "User",
       required: true,
     },
-    addressId: {
-      type: mongoose.Schema.Types.ObjectId,
+    address: {
+      type: String,
     //   ref: "UserAddress.address",
       required: true,
     },
