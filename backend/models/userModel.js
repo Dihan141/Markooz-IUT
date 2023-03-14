@@ -35,6 +35,13 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: false
   },
+  cart:[
+    {
+      product: mongoose.Schema.Types.ObjectId,
+      quantity: Number,
+      price: Number,
+    }
+  ],
   // avatar: {
   //   type: String,
   //   required: true,
