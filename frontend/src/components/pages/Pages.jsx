@@ -1,6 +1,9 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'
-import { Login } from '../auth/Login'
+import { Login } from '../auth/Login/Login'
+import { Signup } from '../auth/Signup/Signup'
+import "../../style/main.scss"
+
 
 import { Footer } from '../common/Footer'
 import { Header } from '../common/Header'
@@ -19,9 +22,9 @@ export const Pages = ({cartItems}) => {
                 <Route exact path='/cart/:id'>
                     <Details />
                 </Route>
-                <Route exact path='/login'>
-                    <Login />
-                </Route>
+                
+                
+    
             </Switch>
     
         </Router>
