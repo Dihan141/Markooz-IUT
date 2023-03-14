@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import  "./loginstyles.css"
+import axios from 'axios'
 
 export const Login = () => {
     const [data, setData] = useState({ email: "", password: "" });
@@ -11,35 +12,37 @@ export const Login = () => {
 		setData({ ...data, [input.name]: input.value });
 	};
 
-	// const handleSubmit = async (e) => {
-	// 	e.preventDefault();
-	// 	try {
-	// 		const url = "http://localhost:8080/api/auth";
-	// 		const { data: res } = await axios.post(url, data);
-	// 		localStorage.setItem("token", res.data);
-	// 		window.location = "/";
-	// 	} catch (error) {
-	// 		if (
-	// 			error.response &&
-	// 			error.response.status >= 400 &&
-	// 			error.response.status <= 500
-	// 		) {
-	// 			setError(error.response.data.message);
-	// 		}
-	// 	}
-	// };
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			const url = "http://localhost:5000/api/users/login";
+			const { data: res } = await axios.post(url, data);
+			localStorage.setItem("token", res.data);
+			window.location = "/merchant/";
+			res.status(200).json({message: "Logged in Successfully"})
+		} catch (error) {
+			if (
+				error.response &&
+				error.response.status >= 400 &&
+				error.response.status <= 500
+			) {
+				setError(error.response.data.message);
+			}
+		}
+	};
 	const [merchant, setMerchant] = useState("");
 
 	const handleMerchantChange = (event) =>{
 		setMerchant(event.target.value)
+		data.isMerchant = event.target.value
 	}
 	
     return (
         <div className="login_container">
 			<div className="login_form_container">
 				<div className="login_left">
-					<form className="login_form_container2">
-                        {/* onSubmit={handleSubmit}> */}
+					<form className="login_form_container2"
+                        onSubmit={handleSubmit}>
 						<h1>Login to Your Account</h1>
 						<input
 							type="email"

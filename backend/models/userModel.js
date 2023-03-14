@@ -24,11 +24,11 @@ const userSchema = new mongoose.Schema({
   },
   phoneNumber: {
     type: String,
-    required: [true, 'Please enter a Phone Number']
+    // required: [true, 'Please enter a Phone Number']
   },
   address: {
     type: String,
-    required: [true, 'Please enter an address']
+    // required: [true, 'Please enter an address']
   },
   isMerchant: {
     type: Boolean,
