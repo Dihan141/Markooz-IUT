@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const {registerUser,loginUser,getMe} = require('../controllers/userController')
-const {protect} = require('../middlewares/authMiddleware')
+const {protect} = require('../middleware/authMiddleware')
 
 router.route('/').post(registerUser)
 // router.route('/:id').get(getUserById).put(updateUserById).delete(deleteUserById)
