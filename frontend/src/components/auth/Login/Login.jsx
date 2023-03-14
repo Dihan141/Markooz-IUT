@@ -59,11 +59,11 @@ export const Login = () => {
 									<input type="radio" name="select" id="option-1" checked />
 									<input type="radio" name="select" id="option-2"/>
 									<label for="option-1" class="option option-1">
-										<div class="dot"></div>
+										
 										<span>Member</span>
 										</label>
 									<label for="option-2" class="option option-2">
-										<div class="dot"></div>
+										
 										<span>Merchant</span>
 									</label>
 								</div>
@@ -75,6 +75,9 @@ export const Login = () => {
 						{error && <div className="login_error_msg">{error}</div>}
 						<button type="submit" className="login_green_btn">
 							Sign In
+						</button>
+						<button className="login_green_btn">
+							<Link className="login_green_btn_link" to="/">Go To Home</Link>
 						</button>
 					</form>
 				</div>

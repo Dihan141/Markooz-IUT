@@ -1,7 +1,8 @@
 .signup_container {
 	width: 100%;
 	min-height: 100vh;
-	background-color: #f5f5f5;
+  background-color: #feb770;
+  background-image: linear-gradient(43deg, #feb770 0%, #fca40b 46%, #fc5923 100%);  
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -99,8 +100,10 @@
 .signup_green_btn {
 	background-color: #ff7c00;
 	color: white;
-	margin: 10px;
+	margin: 5px;
 }
+
+
 
 .wrapperLevel0{
     margin: 0;

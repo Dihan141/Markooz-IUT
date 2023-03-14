@@ -67,7 +67,8 @@ export const Details = () => {
                   <label htmlFor=''>(1 customer review)</label>
                 </div>
                 <h3> ${item.price * item.qty}</h3>
-                <p>{item.author}</p>
+                <br />
+                <p><b>{item.author}</b></p>
                 <div className='qty'>
                   <div className='count'>
                     <button onClick={() => increment(item)}>
@@ -82,27 +83,25 @@ export const Details = () => {
                 </div>
                 <div className='desc'>
                   <h4>PRODUCTS DESCRIPTION</h4>
-                  <p>Designed by Puik in 1949 as one of the first models created especially for Carl Hansen & Son, and produced since 1950. The last of a series of chairs wegner designed based on inspiration from antique chinese armchairs.</p>
+                  <p>Tailor made in IUT. Our fabric will bring you closer to Red Heaven no matter where you may find yourself equiping this product. May our journey in IUT pave the way to a successful career path.</p>
                   <h4> PRODUCT DETAILS</h4>
                   <ul>
                     <li>
-                      <p> Material: Plastic, Wood</p>
+                      <p> <b>Material:</b> Plastic, Wood</p>
                     </li>
                     <li>
-                      <p>Legs: Lacquered oak and black painted oak</p>
+                      <p><b>Legs:</b> Lacquered oak and black painted oak</p>
                     </li>
                     <li>
-                      <p>Dimensions and Weight: Height: 80 cm, Weight: 5.3 kg</p>
+                      <p><b>Dimensions and Weight:</b> Dimensions and Weight: Height: 80 cm, Weight: 5.3 kg</p>
                     </li>
                     <li>
-                      <p>Length: 48cm</p>
+                      <p><b>Length:</b>Length: 48cm</p>
                     </li>
                     <li>
-                      <p>Depth: 52 cm</p>
+                      <p><b>Depth:</b> 52 cm</p>
                     </li>
-                    <li>
-                      <p>Seat Height: 44 cm</p>
-                    </li>
+                    
                   </ul>
                 </div>
               </div>
