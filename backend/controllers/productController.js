@@ -6,36 +6,55 @@ const User = require('../models/userModel')
 // @router GET /api/products
 // @access  Private
 const getProducts = asyncHandler(async (req, res) => {
-    const products = await Product.find()
-    res.status(200).json({prdcts: products})
+    const products = await Product.find({user: req.user.id})
+    res.status(200).json(products)
 })
+
+//@desc Search Products based on name or category... more fields can be added if needed
+//@router GET /api/products/search/
+//@access Public
+const searchProducts = async (req, res) => {
+  try {
+    const searchQuery = req.body.query;
+    
+    // Search for products by name or category
+    const products = await Product.find({
+      $or: [
+        { name: { $regex: searchQuery, $options: 'i' } },
+        // { category: { $regex: searchQuery, $options: 'i' } }
+        { catagory: { $elemMatch: { $regex: searchQuery, $options: 'i' } } }
+      ]
+    });
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+  // console.log(req.body.query)
+  // res.status(200).json({message: req.body.query})
+};
 
 // @desc Set Product
 // @router POST /api/products
 // @access  Private
 const setProduct = asyncHandler(async (req, res) => {
-  const {user, name, image, video, price, catagory, properties,
-  availability, reward_points, total_sales, total_revenue} = req.body
-    if(!name || !price)
+    if(!req.body.name || !req.body.price)
     {
         res.status(400)
         throw new Error('Fill up the required fields')
     }
-
+    if(req.user.isMerchant == true){
     const product = await Product.create({
-      user,
-      name,
-      image,
-      video,
-      price,
-      catagory,
-      properties: [{name: 'size',value: 'xxxl'}],
-      availability,
-      reward_points,
-      total_sales,
-      total_revenue,
+        name: req.body.name,
+        image: req.body.name + ' image',
+        user: req.user.id,
+        price: req.body.price,
+        availability: req.body.availability,
     })
-    res.status(200).json(product)
+    res.status(200).json(product)}
+    else {
+      res.status(500).json({message: 'User is not a merchant. How did you get here?!?'})
+    }
 })
 
 // @desc Update Product
@@ -100,4 +119,5 @@ module.exports = {
     setProduct,
     updateProduct,
     deleteProduct,
+    searchProducts,
 }
