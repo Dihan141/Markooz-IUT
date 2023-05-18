@@ -148,14 +148,19 @@ const ProfileContent = ({ active }) => {
                   />
                 </div>
               </div>
-              <input
+              <div className="flex justify-center w-full">
+            <div className="relative">
+                <input
                 className={`w-[250px] h-[40px] border border-[#3a24db] text-center text-[#3a24db] rounded-[3px] mt-8 cursor-pointer`}
                 required
                 value="Update"
                 type="submit"
               />
+            </div>
+          </div>
             </form>
           </div>
+          
         </>
       )}
 

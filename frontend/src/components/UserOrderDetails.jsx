@@ -216,28 +216,31 @@ const UserOrderDetails = () => {
           <h4 className=" text-[20px]">{data?.shippingAddress.city}</h4>
           <h4 className=" text-[20px]">{data?.user?.phoneNumber}</h4>
         </div>
-        <div className="w-full 800px:w-[40%]">
-          <h4 className="pt-3 text-[20px]">Payment Info:</h4>
+        <div className="w-full 800px:w-[60%] mb-20">
+          <h4 className="pt-3 text-[20px] font-[600]">Payment Info:</h4>
           <h4>
             Status:{" "}
             {data?.paymentInfo?.status ? data?.paymentInfo?.status : "Not Paid"}
           </h4>
           <br />
-           {
+           
+        </div>
+      </div>
+      <div className="w-full 800px:flex items-center gap-x-10">
+        <Link to="/inbox">
+          <div className={`${styles.button} text-white `}>Send Message</div>
+        </Link>
+        {
             data?.status === "Delivered" && (
               <div className={`${styles.button} text-white`}
               onClick={refundHandler}
               >Give a Refund</div>
             )
            }
-        </div>
+
+
       </div>
-      <br />
-      <Link to="/">
-        <div className={`${styles.button} text-white`}>Send Message</div>
-      </Link>
-      <br />
-      <br />
+
     </div>
   );
 };
