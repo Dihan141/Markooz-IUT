@@ -77,7 +77,7 @@ const DashboardSideBar = ({ active }) => {
         </Link>
       </div>
 
-      <div className="w-full flex items-center p-4">
+      {/* <div className="w-full flex items-center p-4">
         <Link to="/dashboard-events" className="w-full flex items-center">
           <MdOutlineLocalOffer
             size={30}
@@ -91,7 +91,7 @@ const DashboardSideBar = ({ active }) => {
             All Events
           </h5>
         </Link>
-      </div>
+      </div> */}
 
       <div className="w-full flex items-center p-4">
         <Link to="/dashboard-create-event" className="w-full flex items-center">
@@ -104,7 +104,7 @@ const DashboardSideBar = ({ active }) => {
               active === 6 ? "text-[crimson]" : "text-[#555]"
             }`}
           >
-            Create Event
+            Create Poll
           </h5>
         </Link>
       </div>
