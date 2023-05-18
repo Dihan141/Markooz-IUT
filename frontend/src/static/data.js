@@ -72,7 +72,7 @@ export const navItems = [
     },
     {
       id: 2,
-      title: "Your Favorite Merhc",
+      title: "Your Favorite Merch",
       Description: "Find it here, always",
       icon: (
         <svg
