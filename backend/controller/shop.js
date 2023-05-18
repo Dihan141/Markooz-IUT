@@ -23,7 +23,7 @@ router.post("/create-shop", upload.single("file"), async (req, res, next) => {
       fs.unlink(filePath, (err) => {
         if (err) {
           console.log(err);
-          res.status(500).json({ message: "Error deleting file" });
+          return next(new ErrorHandler("Error deleting file", 500));
         }
       });
       return next(new ErrorHandler("User already exists", 400));
@@ -31,6 +31,11 @@ router.post("/create-shop", upload.single("file"), async (req, res, next) => {
 
     const filename = req.file.filename;
     const fileUrl = path.join(filename);
+    const domain = email.split('@')[1];
+
+    if (domain !== 'iut-dhaka.edu') {
+      return next(new ErrorHandler("Not an IUT mail", 400));
+    }
 
     const seller = {
       name: req.body.name,
@@ -54,7 +59,7 @@ router.post("/create-shop", upload.single("file"), async (req, res, next) => {
       });
       res.status(201).json({
         success: true,
-        message: `please check your email:- ${seller.email} to activate your shop!`,
+        message: `Please check your email (${seller.email}) to activate your shop!`,
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
@@ -63,6 +68,7 @@ router.post("/create-shop", upload.single("file"), async (req, res, next) => {
     return next(new ErrorHandler(error.message, 400));
   }
 });
+
 
 // create activation token
 const createActivationToken = (seller) => {
