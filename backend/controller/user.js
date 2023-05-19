@@ -51,7 +51,8 @@ router.post("/create-user", upload.single("file"), async (req, res, next) => {
       await sendMail({
         email: user.email,
         subject: "Activate your account",
-        message: `Hello ${user.name}, please click on the link to activate your account: ${activationUrl}`,
+        message: `Hello ${user.name}. Please click on the link to activate your Markooz IUT account: ${activationUrl}`,
+        
       });
       res.status(201).json({
         success: true,
