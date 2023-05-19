@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { server } from "../server";
+import styles from "../styles/styles";
 
 const SellerActivationPage = () => {
   const { activation_token } = useParams();
@@ -39,7 +40,17 @@ const SellerActivationPage = () => {
       {error ? (
         <p>Your token is expired!</p>
       ) : (
-        <p>Your account has been created suceessfully!</p>
+      <div className={'text-center content-center items-center' }>
+          <p className={'pl-1'}>Your account has been created suceessfully!</p>
+          <div className={'items-center pl-20 pt-4'}>
+            <Link to='/shop-login' >
+              <div className={`${styles.button} text-[#fff] `}>
+                Sign In
+              </div>
+            </Link>
+          </div>
+          
+        </div>
       )}
     </div>
   );
