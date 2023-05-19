@@ -218,7 +218,7 @@ const Header = ({ activeHeading }) => {
           <div>
             <Link to="/">
               <img
-                src="https://i.ibb.co/ctqGNRX/resize.png"
+                src="https://i.ibb.co/MS9WZjZ/rsz-resize.png"
                 alt=""
                 className="mt-3 cursor-pointer"
               />
