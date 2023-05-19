@@ -47,9 +47,79 @@ router.post(
       const eventId = req.params.id;
       const userId = req.params.uid;
 
+      // Check if the user exists in the downvote array
+      const event = await Event.findOne({ _id: eventId, downvotes: { $in: [userId] } });
+
+      // Check if the user exists in the upvote array
+      const event1 = await Event.findOne({ _id: eventId, upvotes: { $in: [userId] } });
+
+      if (event) {
+        // User exists in the downvote array, cannot be added to upvote
+        return res.status(400).json({
+          success: "downvoted but not upvoted",
+          message: "User has already downvoted the event.",
+        });
+      }
+
+      if (event1) {
+        // User exists in the upvoted array, cannot be added to upvote
+        return res.status(400).json({
+          success: "upvoted already",
+          message: "User has already upvoted the event.",
+        });
+      }
+
       const updatedEvent = await Event.findByIdAndUpdate(
         eventId,
         { $push: { upvotes: userId } },
+        { new: true }
+      );
+
+      res.status(201).json({
+        success: true,
+        event: updatedEvent,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+
+//remove upvote
+router.post(
+  "/remove-upvote/:id/:uid",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const eventId = req.params.id;
+      const userId = req.params.uid;
+
+      const updatedEvent = await Event.findByIdAndUpdate(
+        eventId,
+        { $pull: { upvotes: userId } },
+        { new: true }
+      );
+
+      res.status(201).json({
+        success: true,
+        event: updatedEvent,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+
+//remove downvote
+router.post(
+  "/remove-downvote/:id/:uid",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const eventId = req.params.id;
+      const userId = req.params.uid;
+
+      const updatedEvent = await Event.findByIdAndUpdate(
+        eventId,
+        { $pull: { downvotes: userId } },
         { new: true }
       );
 
@@ -72,6 +142,28 @@ router.post(
     try {
       const eventId = req.params.id;
       const userId = req.params.uid;
+
+      // Check if the user exists in the upvote array
+      const event = await Event.findOne({ _id: eventId, upvotes: { $in: [userId] } });
+
+      // Check if the user exists in the downvote array
+      const event1 = await Event.findOne({ _id: eventId, downvotes: { $in: [userId] } });
+
+      if (event) {
+        // User exists in the upvote array, cannot be added to upvote
+        return res.status(400).json({
+          success: "upvoted but not downvoted",
+          message: "User has already voted the event.",
+        });
+      }
+
+      if (event1) {
+        // User exists in the downvote array, cannot be added to upvote
+        return res.status(400).json({
+          success: "downvoted already",
+          message: "User has already voted the event.",
+        });
+      }
 
       const updatedEvent = await Event.findByIdAndUpdate(
         eventId,

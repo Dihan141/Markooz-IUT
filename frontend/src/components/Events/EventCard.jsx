@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { server } from "../../server";
 import { backend_url } from "../../server";
 import styles from "../../styles/styles";
 import CountDown from "./CountDown";
@@ -15,16 +17,57 @@ import {  BiUpvote,
 const EventCard = ({ active, data }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
   const { cart } = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [click, setClick] = useState(false);
+  const [click1, setClick1] = useState(false);
 
-  useEffect(() => {
-    if (wishlist && wishlist.find((i) => i._id === data._id)) {
-      setClick(true);
-    } else {
-      setClick(false);
+  // useEffect(() => {
+  //   if (wishlist && wishlist.find((i) => i._id === data._id)) {
+  //     setClick(true);
+  //   } else {
+  //     setClick(false);
+  //   }
+  // }, [wishlist]);
+
+
+  const removeUpvote = async(eventId, userId) => {
+    setClick(false);
+    await axios.post(`${server}/event/remove-upvote/${eventId}/${userId}`, {}).then(
+      (response)=>{
+        console.log(response)
+      }
+    ).catch((error)=>{console.log(error)})
+   }
+
+   const removeDownvote = async(eventId, userId) => {
+    setClick1(false);
+    await axios.post(`${server}/event/remove-downvote/${eventId}/${userId}`, {}).then(
+      (response)=>{
+        console.log(response)
+      }
+    ).catch((error)=>{console.log(error)})
+   }
+
+
+ const postUpvote = async(eventId, userId) => {
+  setClick(true);
+  await axios.post(`${server}/event/post-upvote/${eventId}/${userId}`, {}).then(
+    (response)=>{
+      console.log(response)
     }
-  }, [wishlist]);
+  ).catch((error)=>{console.log(error)})
+ }
+
+ const postDownvote = async(eventId, userId) => {
+  setClick1(true);
+  await axios.post(`${server}/event/post-downvote/${eventId}/${userId}`, {}).then(
+    (response)=>{
+      console.log(response)
+    }
+  ).catch((error)=>{console.log(error)})
+ }
+
   const removeFromWishlistHandler = (data) => {
     setClick(!click);
     dispatch(removeFromWishlist(data));
@@ -81,34 +124,34 @@ const EventCard = ({ active, data }) => {
             <BiUpvote
             size={22}
             className="cursor-pointer absolute"
-            //   onClick={() => removeFromWishlistHandler(data)}
-            color={click ? "green" : "#34eb3a"}
+            onClick={() => removeUpvote(data._id, user._id)}
+            color={click ? "green" : "#333"}
             title="Remove Vote"
             />
         ) : (
             <BiUpvote
             size={22}
             className="cursor-pointer absolute"
-            //   onClick={() => addToWishlistHandler(data)}
-            color={click ? "red" : "#333"}
+            onClick={() => postUpvote(data._id, user._id)}
+            color={click ? "green" : "#333"}
             title="Up Vote"
             />
         )}
     
-        {click ? (
+        {click1 ? (
                 <BiDownvote
                 size={22}
                 className="cursor-pointer absolute mx-12 mt-1"
-                //   onClick={() => removeFromWishlistHandler(data)}
-                color={click ? "red" : "#333"}
+                onClick={() => removeDownvote(data._id, user._id)}
+                color={click1 ? "red" : "#333"}
                 title="Remove Vote"
                 />
             ) : (
                 <BiDownvote
                 size={22}
                 className="cursor-pointer absolute mx-12 mt-1"
-                //   onClick={() => addToWishlistHandler(data)}
-                color={click ? "red" : "#333"}
+                onClick={() => postDownvote(data._id, user._id)}
+                color={click1 ? "red" : "#333"}
                 title="Down Vote"
                 />
             )}
