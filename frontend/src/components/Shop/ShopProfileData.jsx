@@ -7,6 +7,7 @@ import ProductCard from "../Route/ProductCard/ProductCard";
 import { backend_url } from "../../server";
 import Ratings from "../Products/Ratings";
 import { getAllEventsShop } from "../../redux/actions/event";
+import PollCard from "../Route/PollCard/PollCard";
 
 const ShopProfileData = ({ isOwner }) => {
   const { products } = useSelector((state) => state.products);
@@ -85,7 +86,7 @@ const ShopProfileData = ({ isOwner }) => {
           <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-3 lg:gap-[25px] xl:grid-cols-4 xl:gap-[20px] mb-12 border-0">
             {events &&
               events.map((i, index) => (
-                <ProductCard
+                <PollCard
                   data={i}
                   key={index}
                   isShop={true}
