@@ -12,15 +12,20 @@ const Events = () => {
       !isLoading && (
         <div className={`${styles.section}`}>
       <div className={`${styles.heading}`}>
-        <h1>Popular Events</h1>
+        <h1>Popular Polls</h1>
       </div>
 
       <div className="w-full grid">
-         {
+         {/* {
           allEvents.length !== 0 && (
             <EventCard data={allEvents && allEvents[0]} />
           )
-         }
+         } */}
+         {
+                allEvents && allEvents.map((i,index) => (
+                    <EventCard data={i} key={index} />
+                ))
+             }
          <h4>{
            allEvents?.length === 0 && (
             'No Events Available!'
