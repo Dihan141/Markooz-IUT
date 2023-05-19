@@ -39,6 +39,58 @@ router.post(
   })
 );
 
+//post upvote
+router.post(
+  "/post-upvote/:id/:uid",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const eventId = req.params.id;
+      const userId = req.params.uid;
+
+      const updatedEvent = await Event.findByIdAndUpdate(
+        eventId,
+        { $push: { upvotes: userId } },
+        { new: true }
+      );
+
+      res.status(201).json({
+        success: true,
+        event: updatedEvent,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+
+
+
+//post downvote
+router.post(
+  "/post-downvote/:id/:uid",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const eventId = req.params.id;
+      const userId = req.params.uid;
+
+      const updatedEvent = await Event.findByIdAndUpdate(
+        eventId,
+        { $push: { downvotes: userId } },
+        { new: true }
+      );
+
+      res.status(201).json({
+        success: true,
+        event: updatedEvent,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+
+
+
 // get all events
 router.get("/get-all-events", async (req, res, next) => {
   try {
