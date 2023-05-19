@@ -4,7 +4,7 @@ import { server } from "../../server";
 import { backend_url } from "../../server";
 import styles from "../../styles/styles";
 import CountDown from "./CountDown";
-import { Link } from "react-router-dom";
+import { json, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addTocart } from "../../redux/actions/cart";
 import { toast } from "react-toastify";
@@ -22,6 +22,23 @@ const EventCard = ({ active, data }) => {
   const [click, setClick] = useState(false);
   const [click1, setClick1] = useState(false);
 
+  // useEffect(()=>{
+  //   window.localStorage.setItem('set_click',JSON.stringify(click))
+  // },[click])
+
+  // useEffect(()=>{
+  //   const click_data = window.localStorage.getItem('set_click')
+  //   if(click_data !== null) setClick(JSON.parse(click_data))
+  // },[])
+
+  // useEffect(()=>{
+  //   window.localStorage.setItem('set_click1', JSON.stringify(click1))
+  // },[click1])
+
+  // useEffect(()=>{
+  //   const click1_data = window.localStorage.getItem('set_click1')
+  //   if(click1_data !== null) setClick1(JSON.parse(click1_data))
+  // },[])
   // useEffect(() => {
   //   if (wishlist && wishlist.find((i) => i._id === data._id)) {
   //     setClick(true);
@@ -103,14 +120,17 @@ const EventCard = ({ active, data }) => {
       </div>
       <div className="w-full lg:[w-50%] flex flex-col justify-center">
         <h2 className={`${styles.productTitle}`}>{data.name}</h2>
+        <Link to={`/shop/preview/${data?.shop._id}`}>
+          <h5 className={`${styles.shop_name}`}>{data.shop.name}</h5>
+        </Link>
         <p>{data.description}</p>
         <div className="flex py-2 justify-between">
           <div className="flex">
             <h5 className="font-[500] text-[18px] text-[#d55b45] pr-3 line-through">
-              {data.originalPrice}$
+              {data.originalPrice}৳
             </h5>
             <h5 className="font-bold text-[20px] text-[#333] font-Roboto">
-              {data.discountPrice}$
+              {data.discountPrice}৳
             </h5>
           </div>
           {/* <span className="pr-3 font-[400] text-[17px] text-[#44a55e]">
@@ -125,15 +145,15 @@ const EventCard = ({ active, data }) => {
             size={22}
             className="cursor-pointer absolute"
             onClick={() => removeUpvote(data._id, user._id)}
-            color={click ? "green" : "#333"}
+            color="43f773"
             title="Remove Vote"
             />
         ) : (
             <BiUpvote
             size={22}
             className="cursor-pointer absolute"
-            onClick={() => postUpvote(data._id, user._id)}
-            color={click ? "green" : "#333"}
+            onClick={click1? "": () => postUpvote(data._id, user._id) }
+            color="#333"
             title="Up Vote"
             />
         )}
@@ -143,15 +163,15 @@ const EventCard = ({ active, data }) => {
                 size={22}
                 className="cursor-pointer absolute mx-12 mt-1"
                 onClick={() => removeDownvote(data._id, user._id)}
-                color={click1 ? "red" : "#333"}
+                color="red"
                 title="Remove Vote"
                 />
             ) : (
                 <BiDownvote
                 size={22}
                 className="cursor-pointer absolute mx-12 mt-1"
-                onClick={() => postDownvote(data._id, user._id)}
-                color={click1 ? "red" : "#333"}
+                onClick= {click? "": () => postDownvote(data._id, user._id) } 
+                color="#333"
                 title="Down Vote"
                 />
             )}
