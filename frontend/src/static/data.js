@@ -101,7 +101,7 @@ export const navItems = [
     {
       id: 4,
       title: "Affortable Prices",
-      Description: "Get the best deals",
+      Description: "Get the ",
       icon: (
         <svg
           width="32"
