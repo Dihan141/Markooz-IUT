@@ -44,6 +44,14 @@ const eventSchema = new mongoose.Schema({
             type: String,
         },
     ],
+    upvotes:{
+        type: Array,
+        default: [],
+    },
+    downvotes:{
+        type: Array,
+        default: [],
+    },
     shopId:{
         type: String,
         required: true,
