@@ -12,7 +12,13 @@ const ForgotPassword = () =>{
     const [email, setEmail] = useState(""); 
 
     const handleSubmit = async (e) => {
+      e.preventDefault();
 
+      await axios.post(`${server}/user/forgotpassword`, {email}).then(
+        (response)=>{
+          toast(response.data.message)
+        }
+      ).catch((error)=>{toast(error)})
     };
     return(
         <div>

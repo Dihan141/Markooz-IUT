@@ -11,6 +11,50 @@ const sendMail = require("../utils/sendMail");
 const sendToken = require("../utils/jwtToken");
 const { isAuthenticated, isAdmin } = require("../middleware/auth");
 
+router.post("/forgotpassword", async(req, res, next) => {
+  try{
+    const { email } = req.body;
+
+    const user =  await User.findOne({ email });
+
+    if(!user){
+      res.status(201).json({
+        success: false,
+        message: `Email doesn't exist`,
+      });
+      return;
+    }
+
+    const userr = {
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      avatar: user.avatar,
+    }
+
+    const activationToken = createActivationToken(userr);
+
+    const activationUrl = `http://localhost:3000/ForgotPass/activation/${activationToken}`;
+
+    try {
+      await sendMail({
+        email: email,
+        subject: "Request for password change",
+        message: `Hello ${user.name}. Follow the link below to change your password: ${activationUrl}`,
+        
+      });
+      res.status(201).json({
+        success: true,
+        message: `please check your email:- ${user.email} to reset your password!`,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  }catch (error) {
+    return next(new ErrorHandler(error.message, 400));
+  }
+})
+
 router.post("/create-user", upload.single("file"), async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
@@ -103,6 +147,75 @@ router.post(
       });
 
       sendToken(user, 201, res);
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+//token status
+router.post("/token", catchAsyncErrors(async(req, res, next) => {
+  try{
+    const {activation_token} = req.body;
+    const newUser = jwt.verify(
+      activation_token,
+      process.env.ACTIVATION_SECRET
+    );
+
+    if (!newUser) {
+      res.status(201).json({
+        success: false,
+        message: `token expired`,
+      });
+
+      return
+    }
+
+    res.status(201).json({
+      success: true,
+      message: `token valid`,
+    });
+  }catch (error) {
+    return next(new ErrorHandler(error.message, 500));
+  }
+}))
+
+//change password
+router.put(
+  "/changepassword",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { activation_token, newPassword, confirmPassword } = req.body;
+
+      const newUser = jwt.verify(
+        activation_token,
+        process.env.ACTIVATION_SECRET
+      );
+
+      if (!newUser) {
+        return next(new ErrorHandler("Invalid token", 400));
+      }
+      const { name, email, password, avatar } = newUser;
+
+      let user = await User.findOne({ email });
+
+      if(newPassword !== confirmPassword){
+        res.status(401).json({
+          success: false,
+          message: `passwords don't match`,
+        });
+
+        return;
+      }
+
+      user.password = newPassword;
+
+      await user.save();
+
+      res.status(200).json({
+        success: true,
+        message: "Password updated successfully!",
+      });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
     }
