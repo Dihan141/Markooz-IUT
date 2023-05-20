@@ -55,8 +55,8 @@ router.post(
 
 router.get(
   "/get-all-withdraw-request",
-  isAuthenticated,
-  isAdmin("Admin"),
+  // isAuthenticated,
+  // isAdmin("Admin"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const withdraws = await Withdraw.find().sort({ createdAt: -1 });
@@ -74,8 +74,8 @@ router.get(
 // update withdraw request ---- admin
 router.put(
   "/update-withdraw-request/:id",
-  isAuthenticated,
-  isAdmin("Admin"),
+  // isAuthenticated,
+  // isAdmin("Admin"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { sellerId } = req.body;

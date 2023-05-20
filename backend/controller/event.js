@@ -304,8 +304,8 @@ router.delete(
 // all events --- for admin
 router.get(
   "/admin-all-events",
-  isAuthenticated,
-  isAdmin("Admin"),
+  // isAuthenticated,
+  // isAdmin("Admin"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const events = await Event.find().sort({
