@@ -46,6 +46,13 @@ const AllOrders = () => {
       minWidth: 130,
       flex: 0.8,
     },
+    {
+      field: "date_added",
+      headerName: "Date Paid",
+      type: "number",
+      minWidth: 120,
+      flex: 0.8,
+    },
 
     {
       field: " ",
@@ -74,9 +81,10 @@ const AllOrders = () => {
     orders.forEach((item) => {
       row.push({
         id: item._id,
-        itemsQty: item.cart.length,
+        itemsQty: item.cart[0].qty,
         total: "BDT৳ " + item.totalPrice,
         status: item.status,
+        date_added: item.paidAt
       });
     });
 
@@ -92,6 +100,13 @@ const AllOrders = () => {
             pageSize={10}
             disableSelectionOnClick
             autoHeight
+            sortModel={[
+              {
+                field: "date_added",
+                sort: "desc",
+              },
+    
+            ]}
           />
         </div>
       )}
