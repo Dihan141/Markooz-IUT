@@ -5,11 +5,11 @@ import { useParams } from "react-router-dom";
 import { server } from "../server";
 import styles from "../styles/styles";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 const ForgotPassActivationPage = () =>{
     const { activation_token } = useParams();
     const [error, setError] = useState(false);
 
-    const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -18,13 +18,11 @@ const ForgotPassActivationPage = () =>{
 
     await axios
       .put(
-        `${server}/user/update-user-password`,
-        { oldPassword, newPassword, confirmPassword },
-        { withCredentials: true }
+        `${server}/user/changepassword`,
+        { activation_token, newPassword, confirmPassword }
       )
-      .then((res) => {
-        toast.success(res.data.success);
-        setOldPassword("");
+      .then((response) => {
+        toast.success(response.data.message);
         setNewPassword("");
         setConfirmPassword("");
       })
@@ -33,23 +31,39 @@ const ForgotPassActivationPage = () =>{
       });
   };
   
-    useEffect(() => {
-      if (activation_token) {
-        const sendRequest = async () => {
-          await axios
-            .post(`${server}/user/activation`, {
-              activation_token,
-            })
-            .then((res) => {
-              console.log(res);
-            })
-            .catch((err) => {
-              setError(true);
-            });
-        };
-        sendRequest();
+    // useEffect(() => {
+    //   if (activation_token) {
+    //     const sendRequest = async () => {
+    //       await axios
+    //         .post(`${server}/user/activation`, {
+    //           activation_token,
+    //         })
+    //         .then((res) => {
+    //           console.log(res);
+    //         })
+    //         .catch((err) => {
+    //           setError(true);
+    //         });
+    //     };
+    //     sendRequest();
+    //   }
+    // }, []);
+
+  useEffect(()=>{
+    checkTokenValidity()
+  })
+
+  const checkTokenValidity = async() => {
+    await axios.post(`${server}/user/token`, {activation_token}).then(
+      (response) =>{
+        if(response.data.success === true){
+          setError(false)
+        }else{
+          setError(true)
+        }
       }
-    }, []);
+    ).catch((error)=>{console.log(error)})
+  }
 return(
 <div
       style={{
@@ -74,16 +88,6 @@ return(
           onSubmit={passwordChangeHandler}
           className="flex flex-col items-center"
         >
-          <div className=" w-[100%] 800px:w-[50%] mt-5">
-            <label className="block pb-2">Enter your old password</label>
-            <input
-              type="password"
-              className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
-              required
-              value={oldPassword}
-              onChange={(e) => setOldPassword(e.target.value)}
-            />
-          </div>
           <div className=" w-[100%] 800px:w-[50%] mt-2">
             <label className="block pb-2">Enter your new password</label>
             <input
