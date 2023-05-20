@@ -33,9 +33,9 @@ router.post("/create-shop", upload.single("file"), async (req, res, next) => {
     const fileUrl = path.join(filename);
     const domain = email.split('@')[1];
 
-    if (domain !== 'iut-dhaka.edu') {
-      return next(new ErrorHandler("Not an IUT mail", 400));
-    }
+    // if (domain !== 'iut-dhaka.edu') {
+    //   return next(new ErrorHandler("Not an IUT mail", 400));
+    // }
 
     const seller = {
       name: req.body.name,
