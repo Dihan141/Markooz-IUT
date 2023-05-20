@@ -61,6 +61,7 @@ import { server } from "./server";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
+import ForgotPassActivationPage from "./pages/ForgotPassActivationPage";
 
 const App = () => {
   const [stripeApikey, setStripeApiKey] = useState("");
@@ -104,6 +105,10 @@ const App = () => {
         <Route
           path="/seller/activation/:activation_token"
           element={<SellerActivationPage />}
+        />
+        <Route
+           path="/ForgotPass/activation/:activation_token"
+           element={<ForgotPassActivationPage />} 
         />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/product/:id" element={<ProductDetailsPage />} />
