@@ -60,6 +60,7 @@ import axios from "axios";
 import { server } from "./server";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 
 const App = () => {
   const [stripeApikey, setStripeApiKey] = useState("");
@@ -316,6 +317,13 @@ const App = () => {
             </ProtectedAdminRoute>
           }
         />
+        <Route
+          path="/forgotPass"
+          element={
+            <ForgotPassword/>
+          }>
+
+        </Route>
       </Routes>
       <ToastContainer
         position="bottom-center"
