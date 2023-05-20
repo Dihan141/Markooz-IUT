@@ -60,7 +60,14 @@ const Checkout = () => {
   );
 
   // this is shipping cost variable
-  const shipping = subTotalPrice * 0.1;
+
+  let shipping = 80;
+
+  if(zipCode === "1704"){
+    shipping = 0;
+  }
+
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();

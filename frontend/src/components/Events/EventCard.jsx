@@ -148,7 +148,7 @@ const EventCard = ({ active, data }) => {
         active ? "unset" : "mb-12"
       } lg:flex p-2`}
     >
-      <div className="w-full lg:-w[50%] m-auto">
+      <div className="w-full lg:-w[50%] m-auto mr-4">
         <img src={`${backend_url}${data.images[0]}`} alt="" />
       </div>
       <div className="w-full lg:[w-50%] flex flex-col justify-center">
@@ -166,10 +166,14 @@ const EventCard = ({ active, data }) => {
               {data.discountPrice}৳
             </h5>
           </div>
+        {/* <p>Time Remaining :</p> */}
           {/* <span className="pr-3 font-[400] text-[17px] text-[#44a55e]">
             {data.sold_out} sold
           </span> */}
         </div>
+        <span className="font-[400] text-[17px] text-[#475ad2] italic">
+            Time Remaining
+          </span>
         <CountDown data={data} />
         <br />
         <div className="flex items-center">
