@@ -47,6 +47,39 @@ const EventCard = ({ active, data }) => {
   //   }
   // }, [wishlist]);
 
+  useEffect(()=>{
+    getUpvoteStatus();
+    getDownvoteStatus();
+  })
+
+  const getUpvoteStatus = async() => {
+    await axios.get(`${server}/event/status-upvote/${data._id}/${user._id}`).then(
+      (response) =>{
+        console.log(response)
+        if(response.data.success === true){
+          setClick(true)
+          console.log(click)
+        }else{
+          setClick(false)
+        }
+      }
+    ).catch((error)=>{console.log(error)})
+  }
+
+  const getDownvoteStatus = async() => {
+    await axios.get(`${server}/event/status-downvote/${data._id}/${user._id}`).then(
+      (response) =>{
+        console.log(response)
+        if(response.data.success === true){
+          setClick1(true)
+          console.log(click1)
+        }else{
+          setClick1(false)
+        }
+      }
+    ).catch((error)=>{console.log(error)})
+  }
+
 
   const removeUpvote = async(eventId, userId) => {
     setClick(false);
