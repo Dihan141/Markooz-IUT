@@ -181,7 +181,59 @@ router.post(
   })
 );
 
+//get upvote status
+router.get(
+  "/status-upvote/:id/:uid",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const eventId = req.params.id;
+      const userId = req.params.uid;
 
+      // Check if the user exists in the upvote array
+      const event = await Event.findOne({ _id: eventId, upvotes: { $in: [userId] } });
+
+      if (event) {
+        // User exists in the upvote array, cannot be added to upvote
+        return res.status(200).json({
+          success: true,
+        });
+      }
+
+      res.status(201).json({
+        success: false,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+
+//get downvote status
+router.get(
+  "/status-downvote/:id/:uid",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const eventId = req.params.id;
+      const userId = req.params.uid;
+
+      // Check if the user exists in the upvote array
+      const event = await Event.findOne({ _id: eventId, downvotes: { $in: [userId] } });
+
+      if (event) {
+        // User exists in the downvote array, cannot be added to upvote
+        return res.status(200).json({
+          success: true,
+        });
+      }
+
+      res.status(201).json({
+        success: false,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
 
 // get all events
 router.get("/get-all-events", async (req, res, next) => {
