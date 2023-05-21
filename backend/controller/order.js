@@ -12,7 +12,7 @@ router.post(
   "/create-order",
   catchAsyncErrors(async (req, res, next) => {
     try {
-      const { cart, shippingAddress, user, totalPrice, paymentInfo } = req.body;
+      const { cart, shippingAddress, user, totalPrice, paymentInfo, couponCodeData } = req.body;
 
       //   group cart items by shopId
       const shopItemsMap = new Map();
@@ -31,6 +31,15 @@ router.post(
         let total =0;
         for(const item of items){
           total += item.qty*item.discountPrice;
+        }
+        for(const data of couponCodeData){
+          if(shopId === data.shopId){
+            total -= (total * data.value)/100;
+          }
+        }
+
+        if(shippingAddress.zipCode !== "1704"){
+          total += 80;
         }
         const order = await Order.create({
           cart: items,
