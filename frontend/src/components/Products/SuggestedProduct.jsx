@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { productData } from "../../static/data";
+import { Link } from "react-router-dom";
 import styles from "../../styles/styles";
 import ProductCard from "../Route/ProductCard/ProductCard";
 

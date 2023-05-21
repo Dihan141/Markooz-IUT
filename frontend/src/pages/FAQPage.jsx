@@ -172,7 +172,7 @@ const Faq = () => {
               <p className="text-base text-gray-500">
                 You can contact our customer support team by emailing us at
                 support@myecommercestore.com, or by calling us at 01713015454
-                between the hours of 9am and 5pm EST, Monday through Friday.
+                between the hours of 9am and 5pm GMT, Monday through Friday.
               </p>
             </div>
           )}
