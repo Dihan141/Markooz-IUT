@@ -21,6 +21,13 @@ const Checkout = () => {
   const [couponCodeData, setCouponCodeData] = useState(null);
   const [discountPrice, setDiscountPrice] = useState(null);
   const navigate = useNavigate();
+  const [couponDta, setCouponDta] = useState([]);
+
+  useEffect(() => {
+    if (couponCodeData !== null) {
+      setCouponDta((prevCouponDta) => [...prevCouponDta, couponCodeData]);
+    }
+  }, [couponCodeData]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -46,6 +53,7 @@ const Checkout = () => {
       discountPrice,
       shippingAddress,
       user,
+      couponDta,
     }
 
     // update local storage with the updated orders array
