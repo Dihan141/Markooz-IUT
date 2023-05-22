@@ -76,17 +76,18 @@ const AllOrders = () => {
   ];
 
   const row = [];
-
-  orders &&
-    orders.forEach((item) => {
-      row.push({
-        id: item._id,
-        itemsQty: item.cart[0].qty,
-        total: "BDT৳ " + item.totalPrice,
-        status: item.status,
-        date_added: item.paidAt
-      });
+ orders &&
+  orders.forEach((item) => {
+    const qtySum= item.cart.reduce((acc, cartItem) => acc + cartItem.qty, 0);
+    
+    row.push({
+      id: item._id,
+      itemsQty: qtySum,
+      total: "BDT৳ " + item.totalPrice,
+      status: item.status,
+      date_added: item.paidAt
     });
+  });
 
   return (
     <>
