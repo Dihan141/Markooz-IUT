@@ -206,6 +206,7 @@ router.put(
       if (req.body.status === "Refund Success") {
         order.cart.forEach(async (o) => {
           await updateOrder(o._id, o.qty);
+          await updateSellerInfo(order.totalPrice);
         });
       }
 
@@ -216,6 +217,13 @@ router.put(
         product.sold_out -= qty;
 
         await product.save({ validateBeforeSave: false });
+      }
+      async function updateSellerInfo(amount) {
+        const seller = await Shop.findById(req.seller.id);
+        
+        seller.availableBalance -= amount;
+
+        await seller.save();
       }
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
